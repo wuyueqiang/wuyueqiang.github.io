@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>静界 · 个人作品集 | 静态页面</title>
+    <!-- 柔和的现代风格，无任何外部依赖，纯静态 HTML/CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8fafc;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 优雅的头部 */
+        .site-header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            padding: 1.2rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: #0f172a;
+        }
+
+        .logo span {
+            font-weight: 500;
+            color: #3b82f6;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            font-weight: 400;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #334155;
+            transition: color 0.2s ease;
+            font-size: 1.05rem;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+
+        /* 主要内容区域 */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        /* 卡片网格 */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 3rem 1rem 4rem 1rem;
+            background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+            border-radius: 3rem;
+            margin-bottom: 4rem;
+            box-shadow: 0 25px 40px -20px rgba(0, 34, 68, 0.1);
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+
+        .avatar {
+            width: 130px;
+            height: 130px;
+            background: linear-gradient(135deg, #94a3b8, #cbd5e1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 15px 25px -8px rgba(0,0,0,0.15);
+            border: 4px solid white;
+        }
+
+        .avatar svg {
+            width: 70px;
+            height: 70px;
+            fill: white;
+            opacity: 0.9;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #1e293b, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .hero .subhead {
+            font-size: 1.3rem;
+            color: #475569;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            font-weight: 300;
+            border-bottom: 1px dashed #cbd5e1;
+            padding-bottom: 1.5rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: #0f172a;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #64748b;
+        }
+
+        /* 卡片区域 */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 350;
+            margin: 3rem 0 2rem 0;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 70px;
+            height: 3px;
+            background: #3b82f6;
+            border-radius: 3px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2.5rem 0 3rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(203, 213, 225, 0.5);
+            border-radius: 2rem;
+            padding: 2rem 1.8rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 10px 25px -12px rgba(0,0,0,0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: #b1c5db;
+            box-shadow: 0 28px 35px -14px rgba(59,130,246,0.15);
+            background: white;
+        }
+
+        .card-icon {
+            background: #eef2ff;
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: #3b82f6;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .card h3 {
+            font-size: 1.7rem;
+            font-weight: 400;
+            margin-bottom: 0.7rem;
+            color: #0f172a;
+        }
+
+        .card p {
+            color: #475569;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e2e8f0;
+            color: #334155;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            border: 1px solid white;
+        }
+
+        /* 联系方式卡片（特色） */
+        .contact-section {
+            background: white;
+            border-radius: 3rem;
+            padding: 3rem 2.5rem;
+            margin-top: 3rem;
+            box-shadow: 0 20px 30px -15px #d9e2ef;
+            border: 1px solid #e9eef3;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contact-left h2 {
+            font-size: 2.2rem;
+            font-weight: 350;
+            margin-bottom: 0.5rem;
+        }
+        .contact-left p {
+            color: #64748b;
+            max-width: 350px;
+        }
+
+        .contact-btn {
+            background: #1e293b;
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            font-weight: 400;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: default;  /* 静态展示，非交互 */
+            box-shadow: 0 12px 18px -10px #1e293b50;
+            transition: background 0.15s;
+            border: 1px solid #334155;
+        }
+
+        .contact-btn svg {
+            width: 22px;
+            height: 22px;
+            stroke: white;
+            stroke-width: 1.8;
+            fill: none;
+        }
+
+        .contact-btn:hover {
+            background: #0f172a;
+        }
+
+        /* 页脚 */
+        .site-footer {
+            background: #eef2f6;
+            padding: 2.5rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid #dce3ec;
+            color: #475569;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .social-links a {
+            color: #334155;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .social-links a:hover {
+            color: #2563eb;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #cfdee9;
+            margin: 2rem 0;
+        }
+
+        /* 一些小点缀 */
+        .quote {
+            text-align: center;
+            font-style: italic;
+            color: #4b5a6e;
+            padding: 2rem 1rem 0;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            .stats {
+                gap: 1.8rem;
+            }
+            .contact-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .section-title {
+                display: block;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="nav-container">
+            <div class="logo">静<span>界</span></div>
+            <div class="nav-links">
+                <a href="#">作品</a>
+                <a href="#">思绪</a>
+                <a href="#">印记</a>
+                <a href="#">对话</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 主角区块 / 个人简介 -->
+        <section class="hero">
+            <div class="avatar">
+                <!-- 极简头像 SVG -->
+                <svg viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="45" r="22" fill="white" opacity="0.9"/>
+                    <path d="M22 80 Q50 95, 78 80" stroke="white" stroke-width="6" fill="none" stroke-linecap="round" />
+                    <circle cx="38" cy="40" r="4" fill="#1e293b" />
+                    <circle cx="62" cy="40" r="4" fill="#1e293b" />
+                </svg>
+            </div>
+            <h1>林 一 · 静界</h1>
+            <div class="subhead">构建简约、有温度的静态空间 · 设计师 & 业余书写者</div>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">14</span>
+                    <span class="stat-label">项目</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">6</span>
+                    <span class="stat-label">年静修</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">灵感</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 作品卡片网格 纯静态内容 -->
+        <h2 class="section-title">近期思绪</h2>
+        <div class="card-grid">
+            <article class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" fill="none"/>
+                        <path d="M8 10h8M8 14h5" stroke="currentColor" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3>纸上博客</h3>
+                <p>用纯粹的文字与留白记录日常沉思，不追踪、不点赞，只保留阅读的原始质感。</p>
+                <span class="tag">随笔</span>
+                <span class="tag" style="margin-left:0.5rem;">极简</span>
+            </article>
+            <article class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" fill="none" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3>静物摄影</h3>
+                <p>收集光影在旧物上的流动，每一张都是时间的切片。最近尝试自然光与棉麻的对话。</p>
+                <span class="tag">光影</span>
+                <span class="tag" style="margin-left:0.5rem;">胶片感</span>
+            </article>
+            <article class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="8" stroke="currentColor" fill="none"/>
+                        <path d="M5 5l4 4M15 15l4 4M5 19l4-4M15 9l4-4" stroke="currentColor" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3>图标小品</h3>
+                <p>手绘风格的小图标集，为静态页面赋予一点天真的暖意。已收录24枚。</p>
+                <span class="tag">手绘</span>
+                <span class="tag" style="margin-left:0.5rem;">SVG</span>
+            </article>
+        </div>
+
+        <!-- 第二个特色区块 —— 更像关于/服务 -->
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin: 3rem 0;">
+            <div style="flex: 1; min-width: 250px;">
+                <h2 class="section-title" style="margin-top: 0;">静修领域</h2>
+                <div style="margin-top: 2rem;">
+                    <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                        <div style="background: #f1f4f9; border-radius: 2rem; padding: 2rem; flex:1;">
+                            <div style="font-size: 2.2rem; margin-bottom:0.5rem;">🌿</div>
+                            <h3 style="font-weight:400;">版式微调</h3>
+                            <p style="color:#475569;">让文字呼吸，网格与白纸的和谐。</p>
+                        </div>
+                        <div style="background: #f1f4f9; border-radius: 2rem; padding: 2rem; flex:1;">
+                            <div style="font-size: 2.2rem; margin-bottom:0.5rem;">🕊️</div>
+                            <h3 style="font-weight:400;">色彩絮语</h3>
+                            <p style="color:#475569;">低饱和、自然光、柔和过渡。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="flex: 1; background: #dce5f0; border-radius: 3rem; padding: 2.5rem; background: linear-gradient(130deg, #f0f4fa, #ffffff);">
+                <h3 style="font-size: 2rem; font-weight:350; margin-bottom:1rem;">关于此页</h3>
+                <p style="color: #2c3e50; margin-bottom: 1.2rem;">完全静态，不依赖任何外部库。每一行代码都是一次静心练习。献给想要简单浏览、没有干扰的你。</p>
+                <div style="display: flex; gap: 1.5rem; align-items: center;">
+                    <span class="tag" style="background:#cbd5e1;">HTML5</span>
+                    <span class="tag" style="background:#cbd5e1;">CSS3</span>
+                    <span class="tag" style="background:#cbd5e1;">无框架</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 联系区域 静态演示 -->
+        <div class="contact-section">
+            <div class="contact-left">
+                <h2>开始一段安静对话</h2>
+                <p>如果你也喜欢缓慢的互联网角落，欢迎发送一封没有回执的邮件。</p>
+            </div>
+            <div class="contact-btn" role="button" aria-disabled="true">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 7l8 5 8-5M4 7v10a2 2 0 002 2h12a2 2 0 002-2V7" stroke="currentColor" fill="none"/>
+                </svg>
+                jing@静界.虚空
+            </div>
+        </div>
+
+        <!-- 一个简单的引言块 -->
+        <div class="quote">
+            “ 设计是诚实的沉默，静态页也有自己的回响 ”
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div>© 2025 静界 · 无跟踪、无脚本</div>
+            <div class="social-links">
+                <a href="#"><span>⟡</span> 蓝空</a>
+                <a href="#"><span>⟡</span> 木箱</a>
+                <a href="#"><span>⟡</span> 信鸽</a>
+            </div>
+        </div>
+        <hr style="max-width: 1200px; margin: 1.5rem auto;">
+        <div style="max-width: 1200px; margin: 0 auto; text-align: center; font-size: 0.9rem; opacity:0.7;">
+            <span>🕯️ 此页面为纯粹静态展示 · 最后更新 2026.03.11</span>
+        </div>
+    </footer>
+
+    <!-- 没有脚本，只有静态优雅 -->
+</body>
+</html>
